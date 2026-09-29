@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Messenger Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: linear-gradient(
+                135deg,
+                #09b7e8,
+                #03a9e0,
+                #05b8ed
+            );
+
+            overflow: hidden;
+        }
+
+        /* Main Container */
+        .container {
+            width: 900px;
+            min-height: 500px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 70px;
+
+            position: relative;
+        }
+
+        /* Decorative Chat Bubbles */
+        .bubble {
+            position: absolute;
+            border: 3px solid rgba(255, 255, 255, 0.08);
+            border-radius: 50px;
+            width: 120px;
+            height: 80px;
+        }
+
+        .bubble::before {
+            content: "";
+            position: absolute;
+            bottom: -20px;
+            left: 25px;
+
+            border-width: 15px 15px 0 0;
+            border-style: solid;
+            border-color: rgba(255, 255, 255, 0.08) transparent transparent transparent;
+        }
+
+        .bubble span {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+
+            margin-top: 30px;
+            margin-left: 15px;
+        }
+
+        .bubble1 {
+            top: 20px;
+            left: 0;
+        }
+
+        .bubble2 {
+            bottom: 20px;
+            right: 40px;
+        }
+
+        .bubble3 {
+            top: 60px;
+            right: 50px;
+        }
+
+        .bubble4 {
+            bottom: 60px;
+            left: 100px;
+        }
+
+        /* Login Section */
+        .login-section {
+            position: relative;
+            width: 300px;
+        }
+
+        /* CHAT Bubble */
+        .chat-title {
+            position: absolute;
+
+            top: -50px;
+            left: 80px;
+
+            width: 90px;
+            height: 90px;
+
+            background: #159be4;
+
+            border-radius: 50%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+
+            z-index: 2;
+
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-title::after {
+            content: "";
+
+            position: absolute;
+
+            bottom: 0;
+            left: 5px;
+
+            border-width: 15px 25px 0 0;
+            border-style: solid;
+            border-color: #159be4 transparent transparent transparent;
+        }
+
+        /* Login Card */
+        .login-box {
+            width: 300px;
+            min-height: 255px;
+
+            background: white;
+
+            border-radius: 25px;
+
+            padding: 45px 23px 20px;
+
+            text-align: center;
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .login-box h2 {
+            color: #aaa;
+
+            font-size: 20px;
+            font-weight: normal;
+
+            margin-bottom: 15px;
+        }
+
+        /* Input Box */
+        .input-box {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .input-box input {
+            width: 100%;
+
+            height: 38px;
+
+            border: none;
+            outline: none;
+
+            background: #eeeeee;
+
+            border-radius: 25px;
+
+            padding: 0 15px 0 40px;
+
+            font-size: 12px;
+
+            color: #777;
+        }
+
+        .input-box input::placeholder {
+            color: #bbb;
+        }
+
+        /* Icons */
+        .input-box::before {
+            position: absolute;
+
+            left: 15px;
+            top: 11px;
+
+            color: #aaa;
+
+            font-size: 12px;
+
+            z-index: 1;
+        }
+
+        .username::before {
+            content: "●";
+        }
+
+        .password::before {
+            content: "🔒";
+            font-size: 10px;
+        }
+
+        /* Sign In Button */
+        .signin {
+            width: 100%;
+
+            height: 40px;
+
+            border: none;
+
+            border-radius: 25px;
+
+            background: #159be4;
+
+            color: white;
+
+            font-size: 15px;
+
+            cursor: pointer;
+
+            margin-top: 1px;
+
+            transition: 0.3s;
+        }
+
+        .signin:hover {
+            background: #0788ce;
+
+            transform: scale(1.02);
+        }
+
+        /* Forgot Password */
+        .forgot {
+            display: block;
+
+            margin-top: 9px;
+
+            color: #c7c7c7;
+
+            font-size: 11px;
+
+            text-decoration: none;
+        }
+
+        .forgot:hover {
+            color: #159be4;
+        }
+
+        /* Right Side */
+        .content {
+            width: 300px;
+
+            color: white;
+
+            text-align: center;
+        }
+
+        .content h1 {
+            font-size: 30px;
+
+            margin-bottom: 12px;
+
+            font-weight: bold;
+        }
+
+        .content p {
+            font-size: 12px;
+
+            line-height: 1.55;
+
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 750px) {
+
+            body {
+                padding: 30px 15px;
+            }
+
+            .container {
+                width: 100%;
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .content {
+                order: 1;
+            }
+
+            .login-section {
+                order: 2;
+            }
+
+            .bubble3,
+            .bubble4 {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Decorative Background -->
+    <div class="bubble bubble1">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="bubble bubble2">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="bubble bubble3">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="bubble bubble4">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+
+    <!-- Main Container -->
+    <div class="container">
+
+        <!-- Login -->
+        <div class="login-section">
+
+            <div class="chat-title">
+                CHAT
+            </div>
+
+            <div class="login-box">
+
+                <h2>Login</h2>
+
+                <div class="input-box username">
+                    <input
+                        type="text"
+                        placeholder="Username..."
+                    >
+                </div>
+
+                <div class="input-box password">
+                    <input
+                        type="password"
+                        placeholder="Password..."
+                    >
+                </div>
+
+                <button class="signin">
+                    Sign in
+                </button>
+
+                <a href="#" class="forgot">
+                    Forgot your password?
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- Right Content -->
+        <div class="content">
+
+            <h1>MESSENGER</h1>
+
+            <p>
+                Lorem ipsum dolor sit amet,
+                consectetur adipisicing elit,
+                sed do eiusmod tempor incididunt
+                ut labore et dolore magna aliqua.
+                Ut enim ad minim veniam, quis
+                nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
